@@ -47,3 +47,11 @@ body {
   width: 100vw;
   background-color: #282c34;
 }
+
+div#mapContainer > div  {
+  height: 85vh !important
+}
+
+div.gm-style{
+  width: 80vw !important
+}

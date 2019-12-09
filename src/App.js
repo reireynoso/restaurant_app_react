@@ -5,6 +5,10 @@ import NavBar from './components/NavBar'
 import {useSelector} from 'react-redux'
 import restaurantActions from './actions/restaurantActions'
 import {useDispatch} from 'react-redux'
+import {Switch, Route} from 'react-router-dom'
+import LoginComponent from './components/LoginComponent';
+import HomeComponent from './components/HomeComponent'
+import RestaurantPageComponent from './components/RestaurantPageComponent'
 
 const App = () => {
   const restaurants = useSelector(state => state.restaurantReducer)
@@ -17,8 +21,13 @@ const App = () => {
         <NavBar/>
 
         {/* Rest of body components */}
-        <MainRestaurantComponent/>
-        
+        <Switch>
+          <Route path="/signup" component={LoginComponent}/>
+          <Route path="/login" component={LoginComponent}/>
+          <Route path="/restaurants/:name" component={RestaurantPageComponent}/>
+          <Route path="/restaurants" component={MainRestaurantComponent}/>
+          <Route path="/" component={HomeComponent}/>
+        </Switch>
     </div>
   );
 }
