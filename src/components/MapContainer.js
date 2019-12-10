@@ -9,17 +9,21 @@ const MapContainer = (props) => {
     const mapState = useSelector(state => state.mapReducer)
     const dispatch = useDispatch()
 
-    const style = {
-        height: '85vh'
-    }
+    // const style = {
+    //     height: '85vh'
+    // }
   
-    const onMarkerClick = (props, marker, e) => {
-        const data = {
-            props,
-            marker,
-            e
-        }
-        dispatch(mapActions.setMarker(data))
+    // const onMarkerClick = (props, marker, e) => {
+    //     const data = {
+    //         props,
+    //         marker,
+    //         e
+    //     }
+    //     dispatch(mapActions.setMarker(data))
+    // }
+
+    const onMarkerClick = (restaurant) => {
+      dispatch(mapActions.setMarker(restaurant))
     }
 
     const centerMoved = (mapProps,map) => {
@@ -107,6 +111,7 @@ const MapContainer = (props) => {
           stylers: [{color: '#17263c'}]
         }
       ]
+
     return(
         <div id="mapContainer">
             <Map
@@ -126,18 +131,41 @@ const MapContainer = (props) => {
                 styles= {nightModeStyle}
             >
             {
-                restaurants.map(restaurant => <Marker onClick={onMarkerClick} key={restaurant.id} name={restaurant.name} position={{lat: parseFloat(restaurant.latitude), lng: parseFloat(restaurant.longitude)}}/>)
+                restaurants.map(restaurant => 
+                <Marker 
+                  icon={
+                    {
+                    url: '/pin.svg',
+                    scaledSize: new window.google.maps.Size(25,25)
+                    } 
+                }
+                  
+                  onClick={() => onMarkerClick(restaurant)} 
+                  key={restaurant.id} 
+                  name={restaurant.name} 
+                  position={{lat: parseFloat(restaurant.latitude), lng: parseFloat(restaurant.longitude)}}
+                />)
             }
             
            
-            <InfoWindow
+            {/* <InfoWindow
                 visible={mapState.showingInfoWindow}
-                marker={mapState.activeMarker}
+                // marker={mapState.activeMarker}
             >
                 <div>
                     <h1>{mapState.selectedPlace.name}</h1>
                 </div>
-            </InfoWindow>  
+            </InfoWindow>   */}
+            <InfoWindow
+              visible={mapState.showingInfoWindow}
+              position={mapState.center}
+            >
+
+              <div>
+                <h2>{mapState.selectedPlace.name}</h2>
+              </div>
+              
+            </InfoWindow>
             
             </Map>
         </div>
