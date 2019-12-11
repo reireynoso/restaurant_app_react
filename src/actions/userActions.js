@@ -25,7 +25,13 @@ const fetchAutoLogin = () => dispatch => {
         }
     })
     .then(res => res.json())
-    .then(userData => dispatch(setUser(userData)))
+    .then(userData => {
+        // console.log(userData)
+        if(userData.errors){
+            return userData.errors
+        }
+        dispatch(setUser(userData))
+    })
 }
 
 const fetchUser = (userCredentialsObj, route) => dispatch => {
