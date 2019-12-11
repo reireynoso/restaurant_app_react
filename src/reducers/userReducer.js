@@ -10,6 +10,13 @@ const userReducer = (state = {
                 loggedIn: true,
                 user: payload
             }
+        case "UNSET_USER":
+            localStorage.clear()
+            return {
+                ...state,
+                loggedIn: false,
+                user: {}
+            }
         case "SET_ERRORS":
             return {
                 ...state,

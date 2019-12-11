@@ -12,6 +12,22 @@ const emptyErrors = () => ({
     type: "EMPTY_ERRORS"
 })
 
+const logOutUser = () => ({
+    type: "UNSET_USER"
+})
+
+
+const fetchAutoLogin = () => dispatch => {
+    const token = localStorage.getItem("token")
+    fetch(`${process.env.REACT_APP_URL}/auto_login`, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+    .then(res => res.json())
+    .then(userData => dispatch(setUser(userData)))
+}
+
 const fetchUser = (userCredentialsObj, route) => dispatch => {
     const url = (route === 'login' ? 'login' : 'users')
     return fetch(`${process.env.REACT_APP_URL}/${url}`, {
@@ -34,5 +50,7 @@ const fetchUser = (userCredentialsObj, route) => dispatch => {
 
 export default {
     fetchUser,
-    emptyErrors
+    emptyErrors,
+    logOutUser,
+    fetchAutoLogin
 }
