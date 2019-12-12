@@ -55,3 +55,13 @@ div#mapContainer > div  {
 div.gm-style{
   width: 80vw !important
 }
+
+.restaurant{
+  display: flex;
+  justify-content: space-between
+}
+
+.restaurant:hover {
+  background-color: #DCDCDC;
+  transition: 0.2s ease-in-out
+}

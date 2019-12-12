@@ -139,7 +139,7 @@ const MapContainer = (props) => {
                     scaledSize: new window.google.maps.Size(25,25)
                     } 
                 }
-                  
+                  // onMouseover={(e) => {debugger}} 
                   onClick={() => onMarkerClick(restaurant)} 
                   key={restaurant.id} 
                   name={restaurant.name} 
