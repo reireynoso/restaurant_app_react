@@ -48,7 +48,7 @@ const MainRestaurantComponent = () => {
                   <Link
                     data-tooltip={`View Page`} 
                     data-position="left center"
-                   to={`/restaurants/${restaurant.name}`}
+                   to={`/restaurants/${restaurant.name.split(" ").join("-")}`}
                    
                    >
                     <i className="eye icon"></i>
