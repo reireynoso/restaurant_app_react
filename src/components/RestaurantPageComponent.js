@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import mapActions from '../actions/mapActions'
 
 const RestaurantPageComponent = (props) => {
+    const [view, setView] = useState("menu")
     const mapReducer = useSelector(state => state.mapReducer)
     const dispatch = useDispatch()
     const restaurantReducer = useSelector(state => state.restaurantReducer)
@@ -10,15 +11,18 @@ const RestaurantPageComponent = (props) => {
 
     useEffect(() => {
         const currentRestaurant = restaurantReducer.find(restaurant => restaurant.name === currentPath)
-        // console.log(currentRestaurant)
+        console.log(currentRestaurant)
         if(currentRestaurant){
             dispatch(mapActions.setMarker(currentRestaurant))
         }
         // console.log(restaurantReducer)
     }, [restaurantReducer])
 
-    const locationParams = () => `${name.split(" ").join("+")},${city},${state}`
-    const {city, logo, media_image, name, postal_code, price_rating, state, street_address} = mapReducer.selectedPlace
+    const locationParams = () => `${name.split(" ").join("+").split("&").join("and")},${city},${state}`
+    //also check for & and replace with and to avoid param issues
+        
+    
+    const {city, logo, media_image, name, postal_code, price_rating, state, street_address, dishes} = mapReducer.selectedPlace
     // console.log(mapReducer.selectedPlace)
     return(
         <div style={{padding: "2.5%", height:"85vh", display:"flex"}}>
@@ -42,7 +46,7 @@ const RestaurantPageComponent = (props) => {
                         style={{border: "0", paddingTop: "3%"}}
                         width="100%"
                         height="350px"
-                        frameborder="0"
+                        frameBorder="0"
                         src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_GOOGLE_API}&q=${locationParams()}`} 
                         // allowfullscreen
                     >
@@ -50,15 +54,35 @@ const RestaurantPageComponent = (props) => {
 
                 </div>
 
-                <div style={{width: "75vw"}}>
+                <div style={{width: "75vw", padding: "2.5%"}}>
                     <div style={{display: "flex", justifyContent: "center"}}>
-                        <button className="ui button active">Menu</button>
-                        <button className="ui button">Reviews</button>
+                        <button onClick={() => setView("menu")} className="ui button">Menu</button>
+                        <button onClick={() => setView("reviews")} className="ui button">Reviews</button>
+                    </div>
+
+                    <div>
+                        <h1>Menu</h1>
+                        {
+                            view === "menu" ? 
+                            dishes.map(dish => 
+                            <div key={dish.id} className="ui segment">
+                                <h4 style={{display: "flex", justifyContent:"space-between"}}>
+                                    <span>{dish.name}</span>
+                                    <span>${(dish.price * 0.01).toFixed(2)}</span>
+                                </h4>
+                                <p>{dish.description.length === 0 ? "No description." : dish.description}</p>
+                            </div>
+                            )
+                            :
+                            <div>
+                                Reviews
+                            </div>
+                        }
                     </div>
                 </div>
                 </>
                 :
-                <div>
+                <div style={{padding: "2.5%", height:"85vh", display:"flex"}}>
                     Loading
                 </div>
                 }
