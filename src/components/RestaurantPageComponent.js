@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import mapActions from '../actions/mapActions'
+import restaurantActions from '../actions/restaurantActions'
 
 const RestaurantPageComponent = (props) => {
     const [view, setView] = useState("menu")
@@ -21,8 +22,12 @@ const RestaurantPageComponent = (props) => {
     const locationParams = () => `${name.split(" ").join("+").split("&").join("and")},${city},${state}`
     //also check for & and replace with and to avoid param issues
         
+    const handleReviewSubmit = (e) => {
+        e.preventDefault()
+        dispatch(restaurantActions.postReview(id, e.target.comment.value))
+    }
     
-    const {city, logo, media_image, name, postal_code, price_rating, state, street_address, dishes} = mapReducer.selectedPlace
+    const {id, city, logo, media_image, name, postal_code, price_rating, state, street_address, dishes, reviews} = mapReducer.selectedPlace
     // console.log(mapReducer.selectedPlace)
     return(
         <div style={{padding: "2.5%", height:"85vh", display:"flex"}}>
@@ -54,14 +59,15 @@ const RestaurantPageComponent = (props) => {
 
                 </div>
 
-                <div style={{width: "75vw", padding: "2.5%"}}>
+                <div style={{width: "75vw", padding: "2.5%", overflowY: "scroll"}}>
+                    <div>
                     <div style={{display: "flex", justifyContent: "center"}}>
                         <button onClick={() => setView("menu")} className="ui button">Menu</button>
                         <button onClick={() => setView("reviews")} className="ui button">Reviews</button>
                     </div>
 
                     <div>
-                        <h1>Menu</h1>
+                        <h1>{view === "menu" ? "Menu" : "Reviews"}</h1>
                         {
                             view === "menu" ? 
                             dishes.map(dish => 
@@ -75,9 +81,22 @@ const RestaurantPageComponent = (props) => {
                             )
                             :
                             <div>
-                                Reviews
+                                <form onSubmit={handleReviewSubmit} className="ui form">
+                                    <div className="field">
+                                        <textarea name="comment" required placeholder="Review the restaurant" rows="2"></textarea>
+                                    </div>
+                                    <button className="ui blue button" type="submit" value="Submit">Review</button>
+                                </form>
+                                {
+                                    reviews.map(review => 
+                                    <div key={review.id} className="ui segment">
+                                        <p>{review.comment}</p>
+                                        <b>By: {review.user.username}</b>
+                                    </div>)
+                                }
                             </div>
                         }
+                    </div>
                     </div>
                 </div>
                 </>
