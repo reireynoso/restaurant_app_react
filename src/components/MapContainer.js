@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react'
 import mapActions from '../actions/mapActions'
+import {Link} from 'react-router-dom'
 
 const MapContainer = (props) => {
 
@@ -9,10 +10,6 @@ const MapContainer = (props) => {
     const mapState = useSelector(state => state.mapReducer)
     const dispatch = useDispatch()
 
-    // const style = {
-    //     height: '85vh'
-    // }
-  
     // const onMarkerClick = (props, marker, e) => {
     //     const data = {
     //         props,
@@ -21,6 +18,11 @@ const MapContainer = (props) => {
     //     }
     //     dispatch(mapActions.setMarker(data))
     // }
+
+    const handleViewClick = (e) => {
+      console.log(e)
+      // props.history.push(`/restaurants/${name.split(" ").join("-")}`)
+    }
 
     const onMarkerClick = (restaurant) => {
       dispatch(mapActions.setMarker(restaurant))
@@ -112,6 +114,8 @@ const MapContainer = (props) => {
         }
       ]
 
+      const {id, city, logo, media_image, name, postal_code, price_rating, state, street_address, dishes, reviews} = mapState.selectedPlace
+
     return(
         <div id="mapContainer">
             <Map
@@ -147,22 +151,25 @@ const MapContainer = (props) => {
                 />)
             }
             
-           
-            {/* <InfoWindow
-                visible={mapState.showingInfoWindow}
-                // marker={mapState.activeMarker}
-            >
-                <div>
-                    <h1>{mapState.selectedPlace.name}</h1>
-                </div>
-            </InfoWindow>   */}
             <InfoWindow
               visible={mapState.showingInfoWindow}
               position={mapState.center}
             >
+              <div style={{width: "35vw"}}>
+                <h2>{name}</h2>
+                <div style={{display:"flex", alignItems: "center", justifyContent: "space-around"}}>
+                    <div>
+                        <img style={{height: "80px", width: "80px"}} src={logo}></img>  
+                    </div>
 
-              <div>
-                <h2>{mapState.selectedPlace.name}</h2>
+                    <div>
+                      <h3>Address:</h3>
+                      <p>{street_address}</p>
+                      <p>{city}, {state}, {postal_code}</p>
+                      <p><b>Price Rating: </b>{price_rating}</p>
+                    </div>
+                </div>
+                <div onClick={handleViewClick} className="ui blue button">View Page</div>
               </div>
               
             </InfoWindow>

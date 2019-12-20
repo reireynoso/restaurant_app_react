@@ -27,8 +27,8 @@ const MainRestaurantComponent = () => {
 
     return (
         <div style={{display: "flex", margin: 0, padding: 0, height: "85vh"}}>
-          <div style={{width: "20vw", overflow: "scroll"}}>
-            <h1>List of Restaurants</h1>
+          <div style={{width: "20vw", overflowY: "scroll"}}>
+            <h1>Restaurants</h1>
             {
                 restaurants.map(restaurant => 
                 <div
@@ -42,7 +42,7 @@ const MainRestaurantComponent = () => {
                   style={mapReducer.selectedPlace.id === restaurant.id ? {backgroundColor: "#DCDCDC"} : {}}
                 >
                   <div>
-                    {restaurant.name}
+                    <b>{restaurant.name}</b>
                   </div>
                   
                   <Link

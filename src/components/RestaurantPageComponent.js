@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import mapActions from '../actions/mapActions'
 import restaurantActions from '../actions/restaurantActions'
+import {Rating} from 'semantic-ui-react'
 
 const RestaurantPageComponent = (props) => {
     const [view, setView] = useState("menu")
@@ -76,6 +77,8 @@ const RestaurantPageComponent = (props) => {
                                     <span>{dish.name}</span>
                                     <span>${(dish.price * 0.01).toFixed(2)}</span>
                                 </h4>
+
+                                <Rating icon='star' defaultRating={3.5} maxRating={5} />
                                 <p>{dish.description.length === 0 ? "No description." : dish.description}</p>
                             </div>
                             )
