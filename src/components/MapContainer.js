@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react'
 import mapActions from '../actions/mapActions'
-import {Link} from 'react-router-dom'
+import ReactDOM from 'react-dom';
 
 const MapContainer = (props) => {
 
@@ -19,9 +19,15 @@ const MapContainer = (props) => {
     //     dispatch(mapActions.setMarker(data))
     // }
 
-    const handleViewClick = (e) => {
-      console.log(e)
-      // props.history.push(`/restaurants/${name.split(" ").join("-")}`)
+    const handleViewClick = () => {
+      // console.log(props)
+      props.routerProps.history.push(`/restaurants/${name.split(" ").join("-")}`)
+    }
+
+    const generateInfoWindowButton = () => {
+      //generates button inside InfoWindow since onClick functionality is rewritten.
+      const button = (<button className="ui blue button" onClick={handleViewClick}>View Page</button>);
+      ReactDOM.render(React.Children.only(button), document.getElementById("iwc"));
     }
 
     const onMarkerClick = (restaurant) => {
@@ -113,7 +119,10 @@ const MapContainer = (props) => {
           stylers: [{color: '#17263c'}]
         }
       ]
-
+      const onInfoWindowOpen = (props, e) =>  {
+        const button = (<button onClick={e => {console.log("hmapbuttoni1");}}>mapbutton</button>);
+        ReactDOM.render(React.Children.only(button), document.getElementById("iwc"));
+      }
       const {id, city, logo, media_image, name, postal_code, price_rating, state, street_address, dishes, reviews} = mapState.selectedPlace
 
     return(
@@ -154,8 +163,11 @@ const MapContainer = (props) => {
             <InfoWindow
               visible={mapState.showingInfoWindow}
               position={mapState.center}
+              onClick={handleViewClick} 
+              onOpen={generateInfoWindowButton}
+              
             >
-              <div style={{width: "35vw"}}>
+              <div style={{textAlign: "center", width: "35vw"}}>
                 <h2>{name}</h2>
                 <div style={{display:"flex", alignItems: "center", justifyContent: "space-around"}}>
                     <div>
@@ -169,7 +181,8 @@ const MapContainer = (props) => {
                       <p><b>Price Rating: </b>{price_rating}</p>
                     </div>
                 </div>
-                <div onClick={handleViewClick} className="ui blue button">View Page</div>
+                {/* button placeholder for InfoWindow */}
+                <div id="iwc"/>
               </div>
               
             </InfoWindow>

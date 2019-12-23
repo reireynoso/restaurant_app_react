@@ -7,7 +7,7 @@ import userActions from '../actions/userActions'
 const NavBar = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.userReducer)
-  console.log(user)
+  // console.log(user)
 
   // const [active, setActive] = useState("")
 

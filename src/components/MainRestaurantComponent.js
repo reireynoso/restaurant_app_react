@@ -5,11 +5,11 @@ import mapActions from '../actions/mapActions'
 import {Link} from 'react-router-dom'
 
 
-const MainRestaurantComponent = () => {
+const MainRestaurantComponent = (props) => {
     const restaurants = useSelector(state => state.restaurantReducer)
     const mapReducer = useSelector(state => state.mapReducer)
     const dispatch = useDispatch()
-
+    // console.log("Main", props)
     // const mouseOver = (e) => {
     //   if(e.target.className === "ui segment"){
     //     e.target.style = 'display: flex; justify-content: space-between; background-color: #DCDCDC;'
@@ -58,7 +58,7 @@ const MainRestaurantComponent = () => {
           </div>
 
           <div style={{width: "80vw"}}>
-              <MapContainer />
+              <MapContainer routerProps={props}/>
           </div>
         </div>
     )
