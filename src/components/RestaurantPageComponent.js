@@ -39,13 +39,14 @@ const RestaurantPageComponent = (props) => {
     const handleRateDish = (e, {rating}) => {
         // debugger
         const dishId = e.target.parentElement.dataset.id //Grab Dish ID through dataset
-        dispatch(restaurantActions.rateDish(dishId, rating))
+        console.log(id, city)
+        dispatch(restaurantActions.rateDish(dishId, rating, id))
     }
     
     const {id, city, logo, media_image, name, postal_code, price_rating, state, street_address, dishes, reviews} = mapReducer.selectedPlace
     // console.log(mapReducer.selectedPlace)
     return(
-        <div style={{padding: "2.5%", height:"85vh", display:"flex"}}>
+        <div className="space-div">
                 {
                 city !== undefined ?
                 <>
@@ -86,14 +87,16 @@ const RestaurantPageComponent = (props) => {
                         {
                             view === "menu" ? 
                             dishes.map(dish => {
-                                console.log(dish)
+                                // console.log(dish)
                                 return <div key={dish.id} className="ui segment">
                                 <h4 style={{display: "flex", justifyContent:"space-between"}}>
                                     <span>{dish.name}</span>
                                     <span>${(dish.price * 0.01).toFixed(2)}</span>
                                 </h4>
-
-                                <Rating icon='star' data-id={dish.id} onRate={handleRateDish} defaultRating={2.7} maxRating={5} />
+                                <div style={{display: "flex"}}>
+                                    <Rating icon='star' data-id={dish.id} onRate={handleRateDish} defaultRating={dish.average_rating} maxRating={5} />
+                                    <h4 style={{marginTop: 0}}>{dish.average_rating} / 5.00</h4>
+                                </div>
                                 <p>{dish.description.length === 0 ? "No description." : dish.description}</p>
                             </div>
                             })
@@ -112,7 +115,6 @@ const RestaurantPageComponent = (props) => {
                                     return <div key={review.id} className="ui segment">
                                         <div style={{display: "flex", justifyContent: "space-between"}}>
                                             <p>{review.comment}</p>
-                                            {/* <button className="ui red button">Remove Comment</button> */}
                                             <div onClick={() => handleReviewRemove(review)}>
                                                 {
                                                     user.user.id === review.user.id ? 

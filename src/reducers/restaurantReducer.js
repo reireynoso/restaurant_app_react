@@ -20,6 +20,21 @@ const restaurantReducer = (state = [], {type, payload}) => {
                 return restaurant
             })
             return reviewRemoved
+        case "RATED_DISH":
+            //maps through list of all restaurant and finds matching restaurantId from payload. With match iterate through restaurants
+            //dishes and find the one that changed average rating from response of API
+            const ratingAdded = state.map(restaurant => {
+                if(restaurant.id === payload.restaurantId){
+                    restaurant.dishes.map(dish => {
+                        if(dish.id === payload.dish.id){
+                            dish.average_rating = payload.dish.average_rating
+                        }
+                        return dish
+                    })
+                }
+                return restaurant
+            })
+            return ratingAdded
         default: return state
     }
 }

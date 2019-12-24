@@ -9,6 +9,7 @@ import {Switch, Route, Redirect} from 'react-router-dom'
 import LoginComponent from './components/LoginComponent';
 import HomeComponent from './components/HomeComponent'
 import RestaurantPageComponent from './components/RestaurantPageComponent'
+import ProfileComponent from './components/ProfileComponent'
 
 const App = () => {
   // const restaurants = useSelector(state => state.restaurantReducer)
@@ -32,6 +33,7 @@ const App = () => {
           {/* <Route path="/login" render={(routerProps) => userReducer.loggedIn ? <Redirect to="/restaurants"/> : <LoginComponent {...routerProps}/>}/> */}
           <Route path="/restaurants/:name" component={RestaurantPageComponent}/>
           <Route path="/restaurants" component={MainRestaurantComponent}/>
+          <Route path="/profile" component={ProfileComponent}/>
           <Route path="/home" component={HomeComponent}/>
           <Route path="/" render={() => <Redirect to= "/home" />}/> 
         </Switch>

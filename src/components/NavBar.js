@@ -43,9 +43,11 @@ const NavBar = () => {
                   Restaurants
                 </div>
               </Link>
-              <div className={`item ${setActive('/favorites')}`}>
-                Favorites
-              </div>
+              <Link to="/profile">
+                <div className={`item ${setActive('/profile')}`}>
+                  Profile
+                </div>
+              </Link>
             </div>
 
             <div className="right menu">

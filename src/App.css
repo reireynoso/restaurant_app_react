@@ -70,3 +70,8 @@ div.gm-style{
   margin: 0
 }
 
+.space-div {
+  padding: 2.5%; 
+  height: 85vh; 
+  display: flex
+}

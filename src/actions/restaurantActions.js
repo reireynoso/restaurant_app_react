@@ -13,6 +13,14 @@ const removeReview = reviewObj => ({
     payload: reviewObj
 })
 
+const addRating = (dish, restaurantId) => ({
+    type: "RATED_DISH",
+    payload: {
+        dish,
+        restaurantId
+    }
+})
+
 const fetchRestaurants = () => dispatch => {
     fetch(`${process.env.REACT_APP_URL}/restaurants`)
     .then(res => res.json())
@@ -55,7 +63,7 @@ const deleteReview = review => dispatch => {
     })
 }
 
-const rateDish = (dishId, rating) => dispatch => {
+const rateDish = (dishId, rating, restaurantId) => dispatch => {
     const parsedDishId = parseInt(dishId)
     return fetch(`${process.env.REACT_APP_URL}/ratings`, {
         method: "POST",
@@ -71,7 +79,8 @@ const rateDish = (dishId, rating) => dispatch => {
     })
     .then(resp => resp.json())
     .then(dish => {
-        console.log(dish)
+        // console.log(dish)
+        dispatch(addRating(dish, restaurantId))
     })
 // console.log(dish)
 }
