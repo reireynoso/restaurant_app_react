@@ -54,9 +54,14 @@ const fetchUser = (userCredentialsObj, route) => dispatch => {
     })
 }
 
+const fetchReviewAndRatedDish = () => dispatch => {
+
+}
+
 export default {
     fetchUser,
     emptyErrors,
     logOutUser,
-    fetchAutoLogin
+    fetchAutoLogin,
+    fetchReviewAndRatedDish
 }

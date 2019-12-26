@@ -75,3 +75,7 @@ div.gm-style{
   height: 85vh; 
   display: flex
 }
+
+.profile-menu {
+  margin: 0 !important
+}

@@ -1,7 +1,9 @@
 const userReducer = (state = {
     loggedIn: false,
     user: {},
-    loginErrors: []
+    loginErrors: [],
+    reviewedRestaurants: [],
+    ratedDishes: []
 }, {type, payload}) => {
     switch(type){
         case "SET_USER":
