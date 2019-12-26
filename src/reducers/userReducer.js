@@ -29,6 +29,12 @@ const userReducer = (state = {
                 ...state,
                 loginErrors: []
             }
+        case "SET_USER_REVIEWS_RATINGS":
+            return {
+                ...state,
+                reviewedRestaurants: payload.reviews,
+                ratedDishes: payload.ratings
+            }
         default: return state
     }
 }

@@ -66,9 +66,14 @@ div.gm-style{
   transition: 0.2s ease-in-out
 }
 
-.restaurant-info h2,  .restaurant-info p {
-  margin: 0
+.restaurant-info h2,  .restaurant-info p, .restaurant-info h4 {
+  margin: 0 !important
 }
+
+/* .restaurant-info p {
+  margin-block-start: 0 !important;
+  margin-block-end: 0 !important
+} */
 
 .space-div {
   padding: 2.5%; 

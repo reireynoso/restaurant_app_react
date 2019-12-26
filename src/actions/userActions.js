@@ -16,6 +16,11 @@ const logOutUser = () => ({
     type: "UNSET_USER"
 })
 
+const setUserReviewsAndRatings = userInfo => ({
+    type: "SET_USER_REVIEWS_RATINGS",
+    payload: userInfo
+})
+
 
 const fetchAutoLogin = () => dispatch => {
     const token = localStorage.getItem("token")
@@ -55,7 +60,20 @@ const fetchUser = (userCredentialsObj, route) => dispatch => {
 }
 
 const fetchReviewAndRatedDish = () => dispatch => {
-
+    const token = localStorage.getItem("token")
+    if(token){
+        return fetch(`${process.env.REACT_APP_URL}/user_info`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        .then(res => res.json())
+        //data => {reviews: [], ratings:} of current user
+        .then(data => dispatch(setUserReviewsAndRatings(data)))
+    }
+    else{
+        console.log("Login/Signup first")
+    }
 }
 
 export default {

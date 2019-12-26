@@ -31,6 +31,18 @@ const RestaurantPageComponent = (props) => {
         setComment("")
     }
 
+    const generateDollarSigns = (price) => {
+        const whackSolution = []
+        for(let i = 0; i < price; i++){
+            whackSolution.push("something")
+        }
+        return <div><b>Price Rating: </b>
+                {
+                    whackSolution.map((whack, index) =>  <i key={index} className="dollar sign icon"></i>)
+                }
+        </div>
+    }
+
     const handleReviewRemove = (review) => {
         // console.log(review)
         dispatch(restaurantActions.deleteReview(review))
@@ -43,7 +55,7 @@ const RestaurantPageComponent = (props) => {
         dispatch(restaurantActions.rateDish(dishId, rating, id))
     }
     
-    const {id, city, logo, media_image, name, postal_code, price_rating, state, street_address, dishes, reviews} = mapReducer.selectedPlace
+    const {id, city, logo, name, postal_code, price_rating, state, street_address, dishes, reviews} = mapReducer.selectedPlace
     // console.log(mapReducer.selectedPlace)
     return(
         <div className="space-div">
@@ -53,13 +65,14 @@ const RestaurantPageComponent = (props) => {
                 <div style={{width: "35vw"}}>
                     <div style={{display:"flex", justifyContent: "space-around"}}>
                         <div>
-                            <img style={{height: "80px", width: "80px"}} src={logo}></img>
+                            <img alt={name} style={{height: "80px", width: "80px"}} src={logo}></img>
                         </div>
 
                         <div className="restaurant-info">
                             <h2>{name}</h2>
                             <p>{street_address}</p>
                             <p>{city}, {state}, {postal_code}</p>
+                            {generateDollarSigns(price_rating)}
                         </div>
                     </div>
 
@@ -104,7 +117,7 @@ const RestaurantPageComponent = (props) => {
                             <div>
                                 <form onSubmit={handleReviewSubmit} className="ui form">
                                     <div className="field">
-                                        <textarea name="comment" onChange={(e) => setComment(e.target.value)} required placeholder="Review the restaurant" rows="2"></textarea>
+                                        <textarea value={comment} name="comment" onChange={(e) => setComment(e.target.value)} required placeholder="Review the restaurant" rows="2"></textarea>
                                     </div>
                                     <button className="ui blue button" type="submit" value="Submit">Review</button>
                                 </form>
@@ -114,7 +127,7 @@ const RestaurantPageComponent = (props) => {
                                         // console.log(user)
                                     return <div key={review.id} className="ui segment">
                                         <div style={{display: "flex", justifyContent: "space-between"}}>
-                                            <p>{review.comment}</p>
+                                            <p style={{width: "85%", wordWrap: "break-word"}}>{review.comment}</p>
                                             <div onClick={() => handleReviewRemove(review)}>
                                                 {
                                                     user.user.id === review.user.id ? 

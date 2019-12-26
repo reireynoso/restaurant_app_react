@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react'
 import mapActions from '../actions/mapActions'
@@ -119,11 +119,8 @@ const MapContainer = (props) => {
           stylers: [{color: '#17263c'}]
         }
       ]
-      const onInfoWindowOpen = (props, e) =>  {
-        const button = (<button onClick={e => {console.log("hmapbuttoni1");}}>mapbutton</button>);
-        ReactDOM.render(React.Children.only(button), document.getElementById("iwc"));
-      }
-      const {id, city, logo, media_image, name, postal_code, price_rating, state, street_address, dishes, reviews} = mapState.selectedPlace
+
+      const {city, logo, name, postal_code, price_rating, state, street_address } = mapState.selectedPlace
 
     return(
         <div id="mapContainer">
@@ -171,7 +168,7 @@ const MapContainer = (props) => {
                 <h2>{name}</h2>
                 <div style={{display:"flex", alignItems: "center", justifyContent: "space-around"}}>
                     <div>
-                        <img style={{height: "80px", width: "80px"}} src={logo}></img>  
+                        <img alt={name} style={{height: "80px", width: "80px"}} src={logo}></img>  
                     </div>
 
                     <div>
