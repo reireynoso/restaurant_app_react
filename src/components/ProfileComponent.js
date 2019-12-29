@@ -27,7 +27,9 @@ const ProfileComponent = () => {
     }
 
     const generateUserProfileImage = () => <div style={{width: "20vw"}}>
-        <img alt="" style={{height: "80px", width: "100%"}} src="https://lastfm.freetls.fastly.net/i/u/770x0/8837abdce7634e93999e4d3738fd0ed1.jpg"/>
+        <div className="profile-image-container">
+            <img alt="" style={{height: "80px", width: "100%"}} src={user.user.photo_url}/>
+        </div>
     </div>
 
     const checkWhichToRender = () => {
@@ -112,8 +114,8 @@ const ProfileComponent = () => {
     return (
         <div className="space-div" style={{margin: "0 10%", textAlign: "center", backgroundColor: "#F3F1F0"}}>
             <div style={{width: "30vw"}}>
-                <div style={{borderRadius: "15px", overflow: "hidden"}}>
-                    <img alt="" style={{height: "250px", width: "100%"}} src="https://lastfm.freetls.fastly.net/i/u/770x0/8837abdce7634e93999e4d3738fd0ed1.jpg"/>
+                <div className="profile-image-container">
+                    <img alt="" style={{height: "250px", width: "100%"}} src={user.user.photo_url}/>
                 </div>
 
                 <div>

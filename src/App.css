@@ -80,3 +80,8 @@ div.gm-style{
 .profile-menu {
   margin: 0 !important
 }
+
+.profile-image-container {
+  border-radius: 15px; 
+  overflow: hidden
+}
