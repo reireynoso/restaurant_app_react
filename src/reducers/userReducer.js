@@ -17,7 +17,9 @@ const userReducer = (state = {
             return {
                 ...state,
                 loggedIn: false,
-                user: {}
+                user: {},
+                reviewedRestaurants: [],
+                ratedDishes: []
             }
         case "SET_ERRORS":
             return {

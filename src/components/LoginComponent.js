@@ -8,6 +8,8 @@ const LoginComponent = (props) => {
     const user = useSelector(state => state.userReducer)
     // console.log(user)
 
+    let fileInput = React.createRef();
+
     const dispatch = useDispatch()
     const route = props.history.location.pathname.split("").splice(1).join("")
     
@@ -26,7 +28,13 @@ const LoginComponent = (props) => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const res = await dispatch(userActions.fetchUser({username: username.trim().toLowerCase(), password}, route)) 
+        let formData = new FormData()
+        formData.append('username', username.trim().toLowerCase())
+        formData.append('password', password)
+        formData.append('photo_url', fileInput.current.files[0])
+       
+        const res = await dispatch(userActions.fetchUser(formData, route)) 
+        // const res = await dispatch(userActions.fetchUser({username: username.trim().toLowerCase(), password}, route)) 
         if(!res){
             setUsername("")
             setPassword("")
@@ -57,6 +65,9 @@ const LoginComponent = (props) => {
                     <label>Password</label>
                     <input type="password" onChange={handlePasswordChange} value={password} name="password" placeholder="Password"/>
                 </div>
+                {
+                    route === "signup" ? <input type="file" onChange={() => console.log(fileInput)} name="image" required ref={fileInput}/> : null
+                }
                 <ul>
                 {
                     user.loginErrors.map((error,idx) => <li style={errorLiStyle} key={idx}>{error}</li>)
