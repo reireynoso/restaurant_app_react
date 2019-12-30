@@ -9,10 +9,24 @@ const ProfileComponent = () => {
     const dispatch = useDispatch()
     
     console.log(user)
+    
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    let fileInput = React.createRef();
 
     useEffect(() => {
         dispatch(userActions.fetchReviewAndRatedDish())
+        setUsername("")
+        setPassword("")
     }, [])
+
+
+    console.log(fileInput)
+
+    const submitInformationChange = (e) => {
+        e.preventDefault()
+        console.log(fileInput.current === null)
+    }   
 
     const generateDollarSigns = (price) => {
         const whackSolution = []
@@ -105,6 +119,30 @@ const ProfileComponent = () => {
             case "update":
                 return <div>
                     <h1>Update</h1>
+                    <h3>Change Information</h3>
+                    <form className="ui form" onSubmit={submitInformationChange}>
+                        <div className="field">
+                            <label>Username</label>
+                            <input type="text" onChange={(e) => setUsername(e.target.value)} name="username" placeholder="Username"/>
+                        </div>
+
+                        <div className="field">
+                            <label>Photo Image</label>
+                            <input type="file"/>
+                        </div>
+
+                        <button className="ui button" type="submit">Update Information</button>
+                    </form>
+                    
+                    <h3>Change Password</h3>
+                    <form className="ui form">
+                        <div className="field">
+                            <label>Change Password</label>
+                            <input type="password" onChange={(e) => setPassword(e.target.value)} name="password" placeholder="Password"/>
+                        </div>
+
+                        <button className="ui button" type="submit">Update Password</button>
+                    </form>
                 </div>
             default: return <div>
                 Hello

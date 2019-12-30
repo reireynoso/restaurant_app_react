@@ -12,7 +12,6 @@ const LoginComponent = (props) => {
 
     const dispatch = useDispatch()
     const route = props.history.location.pathname.split("").splice(1).join("")
-    
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     // const [errors, setErrors] = useState([])
@@ -26,14 +25,31 @@ const LoginComponent = (props) => {
     const handlePasswordChange = (e) => {
         setPassword(e.target.value)   
     }
+
+    const whichDataToSend = () => {
+        if(route === "signup"){
+            let formData = new FormData()
+            formData.append('username', username.trim().toLowerCase())
+            formData.append('password', password)
+            formData.append('photo_url', fileInput.current.files[0])
+            return formData
+        }
+        else{
+            return {
+                username: username.trim().toLowerCase(),
+                password
+            }
+        }
+    }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        let formData = new FormData()
-        formData.append('username', username.trim().toLowerCase())
-        formData.append('password', password)
-        formData.append('photo_url', fileInput.current.files[0])
-       
-        const res = await dispatch(userActions.fetchUser(formData, route)) 
+        // let formData = new FormData()
+        // formData.append('username', username.trim().toLowerCase())
+        // formData.append('password', password)
+        // formData.append('photo_url', fileInput.current.files[0])
+        const dataToSend = whichDataToSend()
+        // console.log(dataToSend)
+        const res = await dispatch(userActions.fetchUser(dataToSend, route)) 
         // const res = await dispatch(userActions.fetchUser({username: username.trim().toLowerCase(), password}, route)) 
         if(!res){
             setUsername("")

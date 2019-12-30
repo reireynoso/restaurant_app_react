@@ -41,14 +41,25 @@ const fetchAutoLogin = () => dispatch => {
 
 const fetchUser = (userCredentialsObj, route) => dispatch => {
     const url = (route === 'login' ? 'login' : 'users')
-    return fetch(`${process.env.REACT_APP_URL}/${url}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": 'application/json',
-            "Accept": 'application/json'
-        },
-        body: JSON.stringify(userCredentialsObj)
-    })
+    const credentials = (route === 'login' ? JSON.stringify(userCredentialsObj) : userCredentialsObj)
+    // debugger
+    const secondArgument = (
+        route === 'login' ? 
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": 'application/json',
+                "Accept": 'application/json'
+            },
+            body: credentials
+        }
+        :
+        {
+            method: "POST",
+            body: credentials
+        }
+    )
+    return fetch(`${process.env.REACT_APP_URL}/${url}`, secondArgument)
     .then(res => res.json())
     .then(userData => {
         if(userData.errors){
