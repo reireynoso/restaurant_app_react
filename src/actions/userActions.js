@@ -77,6 +77,9 @@ const updateUser = (updatedInfo, containsImage, isPassword) => dispatch => {
         containsImage ? 
         {
             method: "PATCH",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
             body: updatedInfo
         }
         :
@@ -84,7 +87,8 @@ const updateUser = (updatedInfo, containsImage, isPassword) => dispatch => {
             method: "PATCH",
             headers: {
                 "Content-Type": 'application/json',
-                "Accept": 'application/json'
+                "Accept": 'application/json',
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify(updatedInfo)
         }

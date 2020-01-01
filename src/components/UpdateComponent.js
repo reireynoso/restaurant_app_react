@@ -10,10 +10,22 @@ const UpdateComponent = (props) => {
 
     const dispatch = useDispatch()
 
+    // userActions.updateUser(information, containsImage? , isPassword?)
+
     const submitInformationChange = (e) => {
         e.preventDefault()
-        console.log(fileInput.current === null)
-        console.log(username)
+        // console.log(fileInput.current.value === "")
+        if(fileInput.current.value === ""){
+            const updateUsername = {username}
+            dispatch(userActions.updateUser(updateUsername, false, false))
+        }
+        else{
+            let formData = new FormData()
+            formData.append('username', username.trim().toLowerCase())
+            formData.append('photo_url', fileInput.current.files[0])
+            dispatch(userActions.updateUser(formData, true, false))
+        }
+        // console.log(username)
     }   
 
     const submitPasswordChange = (e) => {
@@ -40,7 +52,7 @@ const UpdateComponent = (props) => {
 
                 <div className="field">
                     <label>Photo Image</label>
-                    <input type="file"/>
+                    <input type="file" ref={fileInput}/>
                 </div>
 
                 <button className="ui button" type="submit">Update Information</button>
