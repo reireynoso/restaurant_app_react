@@ -70,6 +70,32 @@ const fetchUser = (userCredentialsObj, route) => dispatch => {
     })
 }
 
+const updateUser = (updatedInfo, containsImage, isPassword) => dispatch => {
+    const token = localStorage.getItem("token")
+    const path = isPassword ? `/change_password` : '/update_user'
+    const secondArgument = (
+        containsImage ? 
+        {
+            method: "PATCH",
+            body: updatedInfo
+        }
+        :
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": 'application/json',
+                "Accept": 'application/json'
+            },
+            body: JSON.stringify(updatedInfo)
+        }
+    )
+    if(token){
+        return fetch(`${process.env.REACT_APP_URL}/${path}`, secondArgument)
+        .then(res => res.json())
+        .then(data => console.log(data))
+    }
+}
+
 const fetchReviewAndRatedDish = () => dispatch => {
     const token = localStorage.getItem("token")
     if(token){
@@ -92,5 +118,6 @@ export default {
     emptyErrors,
     logOutUser,
     fetchAutoLogin,
-    fetchReviewAndRatedDish
+    fetchReviewAndRatedDish,
+    updateUser
 }

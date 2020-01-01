@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {useDispatch} from 'react-redux'
 import userActions from '../actions/userActions'
 
 const UpdateComponent = (props) => {
@@ -6,6 +7,8 @@ const UpdateComponent = (props) => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     let fileInput = React.createRef();
+
+    const dispatch = useDispatch()
 
     const submitInformationChange = (e) => {
         e.preventDefault()
@@ -16,6 +19,8 @@ const UpdateComponent = (props) => {
     const submitPasswordChange = (e) => {
         e.preventDefault()
         console.log(password)
+        const updatePassword = {password}
+        dispatch(userActions.updateUser(updatePassword, false, true))
     }
 
     useEffect(() => {
