@@ -52,6 +52,7 @@ const ProfileComponent = () => {
                 return <div>
                     <h1>Reviewed Restaurants</h1>
                     {
+                        reviews.length !== 0 ?
                         reviews.map(review => 
                         <div key={review.id} className="ui segment restaurant-info">
                            <div style={{display: "flex"}}>
@@ -79,6 +80,8 @@ const ProfileComponent = () => {
                            </div>
                         </div>
                         )
+                        :
+                        <h3>No Restaurants Reviewed...yet</h3>
                     }
                 </div>
             case "ratings":
@@ -86,6 +89,7 @@ const ProfileComponent = () => {
                 return <div>
                     <h1>Rated Dishes</h1>
                     {
+                        ratedDishes.length !== 0 ?
                         ratedDishes.map(rate => 
                         <div key={rate.id} className="ui segment">
                             <div style={{display: "flex"}}>
@@ -113,6 +117,8 @@ const ProfileComponent = () => {
                                 </div>
                             </div>
                         </div>)
+                        :
+                        <h3>No Dishes Rated...yet</h3>
                     }
                 </div>
             case "update":
@@ -130,7 +136,7 @@ const ProfileComponent = () => {
                 </div>
 
                 <div>
-                    <h1>Username Profile</h1>
+                    <h1>{user.user.username}'s Profile</h1>
                 </div>
 
                 <div style={{margin: "auto"}}>

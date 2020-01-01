@@ -2,6 +2,8 @@ const userReducer = (state = {
     loggedIn: false,
     user: {},
     loginErrors: [],
+    updateErrors: [],
+    updateSuccess: [],
     reviewedRestaurants: [],
     ratedDishes: []
 }, {type, payload}) => {
@@ -29,13 +31,30 @@ const userReducer = (state = {
         case "EMPTY_ERRORS":
             return {
                 ...state,
-                loginErrors: []
+                loginErrors: [],
+                updateErrors: []
             }
         case "SET_USER_REVIEWS_RATINGS":
             return {
                 ...state,
                 reviewedRestaurants: payload.reviews,
                 ratedDishes: payload.ratings
+            }
+        case "SET_UPDATE_ERRORS":
+            return {
+                ...state,
+                updateErrors: payload
+            }
+        case "SET_UPDATED_USER":
+            return {
+                ...state,
+                user: payload.user,
+                updateSuccess: payload.success
+            }
+        case "SET_UPDATE_SUCCESS":
+            return {
+                ...state,
+                updateSuccess: payload
             }
         default: return state
     }

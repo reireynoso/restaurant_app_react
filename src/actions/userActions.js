@@ -21,6 +21,20 @@ const setUserReviewsAndRatings = userInfo => ({
     payload: userInfo
 })
 
+const setUpdateErrors = (errorsArr) => ({
+    type: "SET_UPDATE_ERRORS",
+    payload: errorsArr
+})
+
+const setUpdateSuccess = (successArr) => ({
+    type: "SET_UPDATE_SUCCESS",
+    payload: successArr
+})
+
+const updateUserCredentials = updatedUser => ({
+    type: "SET_UPDATED_USER",
+    payload: updatedUser
+})
 
 const fetchAutoLogin = () => dispatch => {
     const token = localStorage.getItem("token")
@@ -96,7 +110,14 @@ const updateUser = (updatedInfo, containsImage, isPassword) => dispatch => {
     if(token){
         return fetch(`${process.env.REACT_APP_URL}/${path}`, secondArgument)
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data)
+            if(data.errors){
+                return dispatch(setUpdateErrors(data.errors))
+            }
+            dispatch(updateUserCredentials(data))
+            // dispatch()
+        })
     }
 }
 

@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import userActions from '../actions/userActions'
+import { file } from '@babel/types';
 
 const UpdateComponent = (props) => {
+
+    const userReducer = useSelector(state => state.userReducer)
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
@@ -12,18 +15,31 @@ const UpdateComponent = (props) => {
 
     // userActions.updateUser(information, containsImage? , isPassword?)
 
-    const submitInformationChange = (e) => {
+    const submitInformationChange = async (e) => {
         e.preventDefault()
         // console.log(fileInput.current.value === "")
         if(fileInput.current.value === ""){
             const updateUsername = {username}
-            dispatch(userActions.updateUser(updateUsername, false, false))
+            const res = await dispatch(userActions.updateUser(updateUsername, false, false))
+            // console.log(res)
+            if(!res){
+                setUsername("")
+                dispatch(userActions.emptyErrors())
+            }
         }
         else{
             let formData = new FormData()
             formData.append('username', username.trim().toLowerCase())
             formData.append('photo_url', fileInput.current.files[0])
-            dispatch(userActions.updateUser(formData, true, false))
+            const res = await dispatch(userActions.updateUser(formData, true, false))
+            // console.log(res)
+            if(!res){
+                // debugger
+                // resets file upload
+                // fileInput.current.value = ""
+                setUsername("")
+                dispatch(userActions.emptyErrors())
+            }
         }
         // console.log(username)
     }   
@@ -37,12 +53,23 @@ const UpdateComponent = (props) => {
 
     useEffect(() => {
         // console.log(props.userReducer.user.username)
-        setUsername(props.userReducer.user.username)
+        // setUsername(props.userReducer.user.username)
+        dispatch(userActions.emptyErrors())
     }, [])
 
     return (
         <div>
             <h1>Update</h1>
+            <ul style={{textAlign: "left"}}>
+                {
+                    userReducer.updateErrors.map((error, index) => <li key={index} style={{color: "red"}}>{error}</li>)
+                }
+            </ul>
+            <ul style={{textAlign: "left"}}>
+                {
+                    userReducer.updateSuccess.map((suc, index) => <li key={index} style={{color: "green"}}>{suc}</li>)
+                }
+            </ul>
             <h3>Change Information</h3>
             <form className="ui form" onSubmit={submitInformationChange}>
                 <div className="field">
