@@ -124,7 +124,8 @@ const ProfileComponent = () => {
             case "update":
                 return <UpdateComponent />
             default: return <div>
-                Hello
+                <h1>Welcome to your Profile Page</h1>
+                <p>Please select one of the tabs to begin.</p>
             </div>
         }
     }
@@ -140,14 +141,14 @@ const ProfileComponent = () => {
                 </div>
 
                 <div style={{margin: "auto"}}>
-                    <div onClick={() => setCurrentView("reviews")} className="ui segment profile-menu">
+                    <div style={currentView === "reviews" ? {backgroundColor: "#DCDCDC"} : {}} onClick={() => setCurrentView("reviews")} className="ui segment profile-menu">
                         Reviewed Restaurants
                     </div>
-                    <div onClick={() => setCurrentView("ratings")} className="ui segment profile-menu">
+                    <div style={currentView === "ratings" ? {backgroundColor: "#DCDCDC"} : {}} onClick={() => setCurrentView("ratings")} className="ui segment profile-menu">
                         Rated Dishes
                     </div>
 
-                    <div onClick={() => setCurrentView("update")} className="ui segment profile-menu">
+                    <div style={currentView === "update" ? {backgroundColor: "#DCDCDC"} : {}} onClick={() => setCurrentView("update")} className="ui segment profile-menu">
                         Update Profile
                     </div>
                 </div>

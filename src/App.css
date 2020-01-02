@@ -57,7 +57,7 @@ div.gm-style{
   justify-content: space-between
 }
 
-.restaurant:hover {
+.restaurant:hover, .profile-menu:hover {
   background-color: #DCDCDC;
   transition: 0.2s ease-in-out
 }
@@ -78,7 +78,8 @@ div.gm-style{
 }
 
 .profile-menu {
-  margin: 0 !important
+  margin: 0 !important;
+  cursor: pointer;
 }
 
 .profile-image-container {
