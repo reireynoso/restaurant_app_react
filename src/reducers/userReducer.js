@@ -56,6 +56,11 @@ const userReducer = (state = {
                 ...state,
                 updateSuccess: payload
             }
+        case "CLEAR_UPDATE_SUCCESS":
+            return {
+                ...state,
+                updateSuccess: []
+            }
         default: return state
     }
 }

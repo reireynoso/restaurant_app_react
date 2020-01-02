@@ -1,19 +1,29 @@
 import React, {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import userActions from '../actions/userActions'
-import { file } from '@babel/types';
+// import { file } from '@babel/types';
 
 const UpdateComponent = (props) => {
 
     const userReducer = useSelector(state => state.userReducer)
 
     const [username, setUsername] = useState("")
+    const [oldPassword, setOldPassword] = useState("")
     const [password, setPassword] = useState("")
     let fileInput = React.createRef();
 
     const dispatch = useDispatch()
 
     // userActions.updateUser(information, containsImage? , isPassword?)
+    const updateSuccessAction = () => {
+        setUsername("")
+        setPassword("")
+        setOldPassword("")
+        setTimeout(() => {
+            dispatch(userActions.clearUpdateSuccess())
+        }, 3000)
+        dispatch(userActions.emptyErrors())
+    }
 
     const submitInformationChange = async (e) => {
         e.preventDefault()
@@ -23,32 +33,42 @@ const UpdateComponent = (props) => {
             const res = await dispatch(userActions.updateUser(updateUsername, false, false))
             // console.log(res)
             if(!res){
-                setUsername("")
-                dispatch(userActions.emptyErrors())
+                // setUsername("")
+                // setTimeout(() => {
+                //     dispatch(userActions.clearUpdateSuccess())
+                // }, 3000)
+                // dispatch(userActions.emptyErrors())
+                updateSuccessAction()
             }
         }
         else{
             let formData = new FormData()
             formData.append('username', username.trim().toLowerCase())
             formData.append('photo_url', fileInput.current.files[0])
+            // resets file upload
+            fileInput.current.value = ""
             const res = await dispatch(userActions.updateUser(formData, true, false))
             // console.log(res)
             if(!res){
-                // debugger
-                // resets file upload
-                // fileInput.current.value = ""
-                setUsername("")
-                dispatch(userActions.emptyErrors())
+                // setUsername("")
+                // dispatch(userActions.emptyErrors())
+                // setTimeout(() => {
+                //     dispatch(userActions.clearUpdateSuccess())
+                // }, 3000)
+                updateSuccessAction()
             }
         }
         // console.log(username)
     }   
 
-    const submitPasswordChange = (e) => {
+    const submitPasswordChange = async (e) => {
         e.preventDefault()
         console.log(password)
-        const updatePassword = {password}
-        dispatch(userActions.updateUser(updatePassword, false, true))
+        const updatePassword = {oldPassword, password}
+        const res = await dispatch(userActions.updateUser(updatePassword, false, true))
+        if(!res){
+            updateSuccessAction()
+        }
     }
 
     useEffect(() => {
@@ -88,8 +108,13 @@ const UpdateComponent = (props) => {
             <h3>Change Password</h3>
             <form className="ui form" onSubmit={submitPasswordChange}>
                 <div className="field">
-                    <label>Change Password</label>
-                    <input type="password" onChange={(e) => setPassword(e.target.value)} name="password" placeholder="Password"/>
+                    <label>Old Password</label>
+                    <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} name="password" placeholder="Password"/>
+                </div>
+
+                <div className="field">
+                    <label>New Password</label>
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} name="password" placeholder="Password"/>
                 </div>
 
                 <button className="ui button" type="submit">Update Password</button>

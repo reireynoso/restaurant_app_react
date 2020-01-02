@@ -26,9 +26,13 @@ const setUpdateErrors = (errorsArr) => ({
     payload: errorsArr
 })
 
-const setUpdateSuccess = (successArr) => ({
-    type: "SET_UPDATE_SUCCESS",
-    payload: successArr
+// const setUpdateSuccess = (successArr) => ({
+//     type: "SET_UPDATE_SUCCESS",
+//     payload: successArr
+// })
+
+const clearUpdateSuccess = () => ({
+    type: "CLEAR_UPDATE_SUCCESS"
 })
 
 const updateUserCredentials = updatedUser => ({
@@ -144,5 +148,6 @@ export default {
     logOutUser,
     fetchAutoLogin,
     fetchReviewAndRatedDish,
-    updateUser
+    updateUser,
+    clearUpdateSuccess
 }

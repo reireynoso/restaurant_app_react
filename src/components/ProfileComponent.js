@@ -122,7 +122,7 @@ const ProfileComponent = () => {
                     }
                 </div>
             case "update":
-                return <UpdateComponent userReducer={user}/>
+                return <UpdateComponent />
             default: return <div>
                 Hello
             </div>
