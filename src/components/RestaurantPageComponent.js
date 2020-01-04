@@ -107,7 +107,12 @@ const RestaurantPageComponent = (props) => {
                                     <span>${(dish.price * 0.01).toFixed(2)}</span>
                                 </h4>
                                 <div style={{display: "flex"}}>
-                                    <Rating icon='star' data-id={dish.id} onRate={handleRateDish} defaultRating={dish.average_rating} maxRating={5} />
+                                    {
+                                        user.loggedIn ? 
+                                        <Rating icon='star' data-id={dish.id} onRate={handleRateDish} defaultRating={dish.average_rating} maxRating={5} />
+                                        :
+                                        null
+                                    }
                                     <h4 style={{marginTop: 0}}>{dish.average_rating} / 5.00</h4>
                                 </div>
                                 <p>{dish.description.length === 0 ? "No description." : dish.description}</p>
@@ -115,12 +120,17 @@ const RestaurantPageComponent = (props) => {
                             })
                             :
                             <div>
-                                <form onSubmit={handleReviewSubmit} className="ui form">
-                                    <div className="field">
-                                        <textarea value={comment} name="comment" onChange={(e) => setComment(e.target.value)} required placeholder="Review the restaurant" rows="2"></textarea>
-                                    </div>
-                                    <button className="ui blue button" type="submit" value="Submit">Review</button>
-                                </form>
+                                {
+                                    user.loggedIn ?
+                                    <form onSubmit={handleReviewSubmit} className="ui form">
+                                        <div className="field">
+                                            <textarea value={comment} name="comment" onChange={(e) => setComment(e.target.value)} required placeholder="Review the restaurant" rows="2"></textarea>
+                                        </div>
+                                        <button className="ui blue button" type="submit" value="Submit">Review</button>
+                                    </form>
+                                    :
+                                    null
+                                }
                                 {
                                     reviews.map(review => {
                                         // console.log(review)
