@@ -5,7 +5,7 @@ const HomeComponent = () => {
    
     return (
         <div className="space-div">
-          <div style={{width: "100%", border: "solid black 5px", margin: "10%", borderRadius: "20px"}}>
+          <div style={{width: "100%", border: "solid black 5px", margin: "6%", borderRadius: "20px"}}>
             <h1 style={{textAlign: "center", padding: "2% 0", margin: 0, height: "20%"}}>Welp (Restaurant App around Jersey City)</h1>
 
             <div style={{width: "100%", height: "80%"}}>
