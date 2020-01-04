@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import userActions from '../actions/userActions'
 // import { file } from '@babel/types';
 
-const UpdateComponent = (props) => {
+const UpdateComponent = () => {
 
     const userReducer = useSelector(state => state.userReducer)
 
