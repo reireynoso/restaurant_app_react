@@ -131,34 +131,42 @@ const ProfileComponent = () => {
     }
     return (
         <div className="space-div" style={{margin: "0 10%", textAlign: "center", backgroundColor: "#F3F1F0"}}>
-            <div style={{width: "30vw"}}>
-                <div className="profile-image-container">
-                    <img alt="" style={{height: "250px", width: "100%"}} src={user.user.photo_url}/>
-                </div>
-
-                <div>
-                    <h1>{user.user.username}'s Profile</h1>
-                </div>
-
-                <div style={{margin: "auto"}}>
-                    <div style={currentView === "reviews" ? {backgroundColor: "#DCDCDC"} : {}} onClick={() => setCurrentView("reviews")} className="ui segment profile-menu">
-                        Reviewed Restaurants
-                    </div>
-                    <div style={currentView === "ratings" ? {backgroundColor: "#DCDCDC"} : {}} onClick={() => setCurrentView("ratings")} className="ui segment profile-menu">
-                        Rated Dishes
+            {
+                user.loggedIn ? 
+                <>
+                <div style={{width: "30vw"}}>
+                    <div className="profile-image-container">
+                        <img alt="" style={{height: "250px", width: "100%"}} src={user.user.photo_url}/>
                     </div>
 
-                    <div style={currentView === "update" ? {backgroundColor: "#DCDCDC"} : {}} onClick={() => setCurrentView("update")} className="ui segment profile-menu">
-                        Update Profile
+                    <div>
+                        <h1>{user.user.username}'s Profile</h1>
+                    </div>
+
+                    <div style={{margin: "auto"}}>
+                        <div style={currentView === "reviews" ? {backgroundColor: "#DCDCDC"} : {}} onClick={() => setCurrentView("reviews")} className="ui segment profile-menu">
+                            Reviewed Restaurants
+                        </div>
+                        <div style={currentView === "ratings" ? {backgroundColor: "#DCDCDC"} : {}} onClick={() => setCurrentView("ratings")} className="ui segment profile-menu">
+                            Rated Dishes
+                        </div>
+
+                        <div style={currentView === "update" ? {backgroundColor: "#DCDCDC"} : {}} onClick={() => setCurrentView("update")} className="ui segment profile-menu">
+                            Update Profile
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div style={{width: "70vw", padding: "2.5%", overflowY: "scroll"}}>
-                {
-                    checkWhichToRender()
-                }
-            </div>
+                <div style={{width: "70vw", padding: "2.5%", overflowY: "scroll"}}>
+                    {
+                        checkWhichToRender()
+                    }
+                </div>
+                </>
+            :
+            <h1>Not sure how you accessed this route but log in first.</h1>
+            // null
+            }    
         </div>
     )
 }

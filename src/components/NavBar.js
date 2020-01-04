@@ -7,7 +7,7 @@ import userActions from '../actions/userActions'
 const NavBar = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.userReducer)
-  // console.log(user)
+  // console.log(user.loggedIn)
 
   // const [active, setActive] = useState("")
 
@@ -43,11 +43,17 @@ const NavBar = () => {
                   Restaurants
                 </div>
               </Link>
-              <Link to="/profile">
+              {
+                user.loggedIn ?  
+                <Link to="/profile">
                 <div className={`item ${setActive('/profile')}`}>
                   Profile
                 </div>
-              </Link>
+                </Link>
+                :
+                null
+              }
+             
             </div>
 
             <div className="right menu">
