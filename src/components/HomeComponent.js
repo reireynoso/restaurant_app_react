@@ -4,7 +4,7 @@ import React from 'react'
 const HomeComponent = () => {
    
     return (
-        <div className="space-div">
+        <div className="space-div animated fadeInRight">
           <div style={{width: "100%", border: "solid black 5px", margin: "6%", borderRadius: "20px"}}>
             <h1 style={{textAlign: "center", padding: "2% 0", margin: 0, height: "20%"}}>Welp (Restaurant App around Jersey City)</h1>
 
