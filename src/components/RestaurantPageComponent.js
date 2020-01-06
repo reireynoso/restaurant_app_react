@@ -62,7 +62,7 @@ const RestaurantPageComponent = (props) => {
                 {
                 city !== undefined ?
                 <>
-                <div style={{width: "35vw"}}>
+                <div className="animated fadeInLeft" style={{width: "35vw"}}>
                     <div style={{display:"flex", justifyContent: "space-around"}}>
                         <div>
                             <img alt={name} style={{height: "80px", width: "80px"}} src={logo}></img>
@@ -88,7 +88,7 @@ const RestaurantPageComponent = (props) => {
 
                 </div>
 
-                <div style={{width: "75vw", padding: "2.5%", overflowY: "scroll"}}>
+                <div className="animated fadeInRight" style={{width: "75vw", padding: "2.5%", overflowY: "scroll"}}>
                     <div>
                     <div style={{display: "flex", justifyContent: "center"}}>
                         <button onClick={() => setView("menu")} className="ui button">Menu</button>
