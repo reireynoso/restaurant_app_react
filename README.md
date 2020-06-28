@@ -9,11 +9,6 @@ Welp is a full stack web application that allows the user to view restaurants ar
 
 ![Image of Sample](public/sample-image.png)
 
-* The API for the Welp, Restaurant App.
-* The API consists of 5 domain models with `has_many` and `belongs_to` associations.
-* Sample data was pulled from a network request in Grubhub.
-
-
 # Getting Started
 Before setting up, make sure the server is installed along with Node.js and NPM
 
